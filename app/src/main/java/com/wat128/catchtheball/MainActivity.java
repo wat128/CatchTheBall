@@ -2,10 +2,14 @@ package com.wat128.catchtheball;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.MotionEvent;
 import android.view.View;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,17 +20,18 @@ public class MainActivity extends AppCompatActivity {
     private ImageView pink;
     private ImageView black;
 
+    // サイズ
+    private int frameHeight;
+    private int boxSize;
+
     // 位置
     private float boxY;
+    // Handler & Timer
+    private Handler handler = new Handler();
+    private Timer timer = new Timer();
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if(event.getAction() == MotionEvent.ACTION_DOWN)
-            boxY -= 20;
-
-        box.setY(boxY);
-        return true;
-    }
+    private boolean action_flg = false;
+    private boolean start_flg = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +51,55 @@ public class MainActivity extends AppCompatActivity {
         pink.setY(-80.0f);
         black.setX(-80.0f);
         black.setY(-80.0f);
+    }
 
-        startLabel.setVisibility(View.INVISIBLE);
-        boxY = 500.0f;
+    public void changePos() {
+        if(action_flg) {
+            boxY -= 20;
+        }
+        else {
+            boxY += 20;
+        }
+
+        if(boxY < 0)
+            boxY = 0;
+
+        if(boxY > frameHeight - boxSize)
+            boxY = frameHeight - boxSize;
+
+        box.setY(boxY);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if(start_flg == false){
+            start_flg = true;
+            frameHeight = findViewById(R.id.frame).getHeight();
+            boxY = box.getY();
+            boxSize = box.getHeight();
+
+            startLabel.setVisibility(View.GONE);
+
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            changePos();
+                        }
+                    });
+                }
+            }, 0, 20);
+        }
+        else {
+            if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                action_flg = true;
+            }
+            else if (event.getAction() == MotionEvent.ACTION_UP){
+                action_flg = false;
+            }
+        }
+        return true;
     }
 }
