@@ -39,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     private float blackX;
     private float blackY;
 
+    // スコア
+    private int score = 0;
+
     // Handler & Timer
     private Handler handler = new Handler();
     private Timer timer = new Timer();
@@ -73,9 +76,14 @@ public class MainActivity extends AppCompatActivity {
         pink.setY(-80.0f);
         black.setX(-80.0f);
         black.setY(-80.0f);
+
+        scoreLabel.setText("score : 0");
     }
 
     public void changePos() {
+
+        hitCheck();
+
         // Orange
         orangeX -= 12;
         if(orangeX < 0){
@@ -118,6 +126,56 @@ public class MainActivity extends AppCompatActivity {
             boxY = frameHeight - boxSize;
 
         box.setY(boxY);
+
+        scoreLabel.setText(("score : " + score));
+    }
+
+    public void hitCheck() {
+        // Orange
+        float orangeCenterX = orangeX + orange.getHeight() / 2;
+        float orangeCenterY = orangeY + orange.getHeight() / 2;
+
+        if(hitStatus(orangeCenterX, orangeCenterY)) {
+            orangeX = -10.0f;
+            score += 10;
+        }
+
+        // Pink
+        float pinkCenterX = pinkX + pink.getHeight() / 2;
+        float pinkCenterY = pinkY + pink.getHeight() / 2;
+
+        if(hitStatus(pinkCenterX, pinkCenterY)) {
+            pinkX = -10.0f;
+            score += 30;
+        }
+
+        // Black
+        float blackCenterX = blackX + black.getHeight() / 2;
+        float blackCenterY = blackY + black.getHeight() / 2;
+
+       if(hitStatus(blackCenterX, blackCenterY)) {
+            // Game Over!
+            if(timer != null){
+                timer.cancel();
+                timer = null;
+            }
+
+            // リザルト画面へ
+        }
+    }
+
+    public boolean hitStatus(float centerX, float centerY)
+    {
+        if(0 <= centerX
+            && centerX <= boxSize
+            && boxY <= centerY
+            && centerY <= boxY + boxSize)
+        {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override
