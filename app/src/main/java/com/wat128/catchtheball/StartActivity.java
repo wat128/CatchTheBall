@@ -21,7 +21,7 @@ public class StartActivity extends AppCompatActivity {
         highScoreLabel = findViewById(R.id.highScoreLabel);
         SharedPreferences sharedPreferences = getSharedPreferences("GAME_DATA", MODE_PRIVATE);
         int highScore = sharedPreferences.getInt("HIGH_SCORE", 0);
-        highScoreLabel.setText(highScore + "");
+        highScoreLabel.setText("High Score : " + highScore);
 
         soundPlayer = new SoundPlayer(this);
     }
