@@ -33,7 +33,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Try Agein"
+        android:text="Try Again"
         android:layout_marginTop="50dp"
         android:onClick="tryAgain"/>
 
