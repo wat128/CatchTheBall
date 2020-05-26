@@ -50,10 +50,15 @@ public class MainActivity extends AppCompatActivity {
     private boolean action_flg = false;
     private boolean start_flg = false;
 
+    // Sound
+    private SoundPlayer soundPlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        soundPlayer = new SoundPlayer(this);
 
         scoreLabel = findViewById(R.id.scoreLabel);
         startLabel = findViewById(R.id.startLabel);
@@ -142,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
         if(hitStatus(orangeCenterX, orangeCenterY)) {
             orangeX = -10.0f;
             score += 10;
+            soundPlayer.playHitSound();
         }
 
         // Pink
@@ -151,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
         if(hitStatus(pinkCenterX, pinkCenterY)) {
             pinkX = -10.0f;
             score += 30;
+            soundPlayer.playHitSound();
         }
 
         // Black
@@ -158,7 +165,10 @@ public class MainActivity extends AppCompatActivity {
         float blackCenterY = blackY + black.getHeight() / 2;
 
        if(hitStatus(blackCenterX, blackCenterY)) {
-            // Game Over!
+
+           soundPlayer.playOverSound();
+
+           // Game Over!
             if(timer != null){
                 timer.cancel();
                 timer = null;
