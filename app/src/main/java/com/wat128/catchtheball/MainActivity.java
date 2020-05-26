@@ -40,6 +40,12 @@ public class MainActivity extends AppCompatActivity {
     private float blackX;
     private float blackY;
 
+    // スピード
+    private int boxSpeed;
+    private int orangeSpeed;
+    private int pinkSpeed;
+    private int blackSpeed;
+
     // スコア
     private int score = 0;
 
@@ -76,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
         screenWidth = size.x;
         screenHeight = size.y;
 
+        boxSpeed = Math.round(screenHeight / 60f);
+        orangeSpeed = Math.round(screenWidth / 60f);
+        pinkSpeed = Math.round(screenWidth / 36f);
+        blackSpeed = Math.round(screenWidth / 45f);
+
         orange.setX(-80.0f);
         orange.setY(-80.0f);
         pink.setX(-80.0f);
@@ -91,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         hitCheck();
 
         // Orange
-        orangeX -= 12;
+        orangeX -= orangeSpeed;
         if(orangeX < 0){
             orangeX = screenWidth + 20;
             orangeY = (float)Math.floor(Math.random() * (frameHeight - orange.getHeight()));
@@ -100,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         orange.setY(orangeY);
 
         // Black
-        blackX -= 16;
+        blackX -= blackSpeed;
         if(blackX < 0){
             blackX = screenWidth + 10;
             blackY = (float)Math.floor(Math.random() * (frameHeight - black.getHeight()));
@@ -109,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         black.setY(blackY);
 
         // Pint
-        pinkX -= 20;
+        pinkX -=pinkSpeed;
         if(pinkX < 0){
             pinkX = screenWidth + 5000;
             pinkY = (float)Math.floor(Math.random() * (frameHeight - pink.getHeight()));
@@ -119,10 +130,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Box
         if(action_flg) {
-            boxY -= 20;
+            boxY -= boxSpeed;
         }
         else {
-            boxY += 20;
+            boxY += boxSpeed;
         }
 
         if(boxY < 0)
