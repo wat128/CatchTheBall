@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         black.setY(-80.0f);
 
         scoreLabel.setText("score : 0");
+
     }
 
     public void changePos() {
@@ -185,6 +186,8 @@ public class MainActivity extends AppCompatActivity {
                 timer = null;
             }
 
+            soundPlayer.stopMainBgm();
+
             // リザルト画面
             Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
             intent.putExtra("SCORE", score);
@@ -227,6 +230,8 @@ public class MainActivity extends AppCompatActivity {
                     });
                 }
             }, 0, 20);
+
+            soundPlayer.playMainBgm();
         }
         else {
             if(event.getAction() == MotionEvent.ACTION_DOWN) {
