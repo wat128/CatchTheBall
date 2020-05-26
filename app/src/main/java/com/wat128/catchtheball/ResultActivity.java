@@ -36,6 +36,9 @@ public class ResultActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() { }
+
     public void tryAgain(View view){
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }

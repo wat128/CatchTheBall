@@ -131,6 +131,9 @@ public class MainActivity extends AppCompatActivity {
         scoreLabel.setText(("score : " + score));
     }
 
+    @Override
+    public void onBackPressed() { }
+
     public void hitCheck() {
         // Orange
         float orangeCenterX = orangeX + orange.getHeight() / 2;

@@ -2,7 +2,9 @@ package com.wat128.catchtheball;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -11,4 +13,9 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
     }
+
+    public void startGame(View view){
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    }
+
 }
